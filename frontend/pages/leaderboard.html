@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leaderboard | Who Pays? (ആരാണ് ബില്ല് അടയ്ക്കുന്നത്?)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Noto+Sans+Malayalam:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="/" class="brand">
+      <span class="brand-icon">🎰</span>
+      <span class="gradient-text">WHO PAYS?</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/" class="nav-link"><span>🏠</span> <span class="nav-text">Home</span></a></li>
+      <li><a href="/game" class="nav-link"><span>🎲</span> <span class="nav-text">Play Game</span></a></li>
+      <li><a href="/leaderboard" class="nav-link active"><span>🏆</span> <span class="nav-text">Leaderboard</span></a></li>
+      <li><a href="/profiles" class="nav-link"><span>🥷</span> <span class="nav-text">Profiles</span></a></li>
+    </ul>
+    <div class="nav-controls">
+      <button id="soundToggleBtn" class="icon-btn" onclick="sounds.toggle()" title="Toggle Sound">🔊</button>
+      <a href="/game" class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Play Now</a>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTAINER -->
+  <main class="container">
+    <div class="hero" style="margin-bottom: 2rem;">
+      <div class="badge-tag">
+        <span>🏆</span> Verified SQLite Statistics
+      </div>
+      <h1 class="hero-title">Hall of Fame & Misfortune</h1>
+      <p class="hero-malayalam">“ചരിത്രം ആരെയും വെറുതെ വിടില്ല!”</p>
+      <p class="hero-subtitle">
+        Real statistics tracked directly from every game round played. Discover who has the deepest pockets and who possesses legendary luck.
+      </p>
+    </div>
+
+    <!-- CATEGORY TABS -->
+    <div class="category-tabs">
+      <button class="cat-tab active" onclick="switchCategory('biggest_wallet', this)">
+        <span>🏆</span> Biggest Wallet
+      </button>
+      <button class="cat-tab" onclick="switchCategory('most_unlucky', this)">
+        <span>😭</span> Most Unlucky
+      </button>
+      <button class="cat-tab" onclick="switchCategory('luckiest', this)">
+        <span>🍀</span> Luckiest
+      </button>
+      <button class="cat-tab" onclick="switchCategory('bill_king', this)">
+        <span>👑</span> Bill King/Queen
+      </button>
+      <button class="cat-tab" onclick="switchCategory('escape_artist', this)">
+        <span>🏃</span> Escape Artist
+      </button>
+    </div>
+
+    <!-- CATEGORY DESCRIPTION BANNER -->
+    <div id="categoryDescBanner" class="glass-panel" style="padding: 1rem 1.5rem; margin-bottom: 2.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; border-color: rgba(251, 191, 36, 0.3);">
+      <div>
+        <h4 id="catTitle" style="color: var(--accent-gold); font-size: 1.1rem; font-weight: 800;">🏆 Biggest Wallet</h4>
+        <p id="catDesc" style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.2rem;">
+          Ranked by highest cumulative bill money (₹) paid across all games.
+        </p>
+      </div>
+      <button onclick="refreshData()" class="btn btn-secondary" style="padding: 0.4rem 0.9rem; font-size: 0.85rem;">
+        <span>🔄</span> Refresh Stats
+      </button>
+    </div>
+
+    <!-- PODIUM FOR TOP 3 -->
+    <div id="leaderboardPodium" class="podium">
+      <!-- Injected via JS -->
+    </div>
+
+    <!-- LEADERBOARD TABLE -->
+    <div class="glass-panel" style="padding: 0; overflow-x: auto;">
+      <table class="leaderboard-table">
+        <thead>
+          <tr>
+            <th style="width: 70px;">Rank</th>
+            <th>Player & Title</th>
+            <th>Total Paid</th>
+            <th>Bills Paid</th>
+            <th>Escapes</th>
+          </tr>
+        </thead>
+        <tbody id="leaderboardTableBody">
+          <!-- Injected via JS -->
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <script src="/script.js"></script>
+  <script src="../script.js"></script>
+  <script>
+    const CAT_INFO = {
+      'biggest_wallet': {
+        title: '🏆 Biggest Wallet (പഴ്സ് നിറഞ്ഞവർ)',
+        desc: 'Ranked by highest cumulative money (₹) paid out across all dining sessions.'
+      },
+      'most_unlucky': {
+        title: '😭 Most Unlucky (തുടരെ പണി കിട്ടുന്നവർ)',
+        desc: 'Ranked by times selected on the wheel and forced to pay double.'
+      },
+      'luckiest': {
+        title: '🍀 Luckiest (ഭാഗ്യദേവതയുടെ സ്വന്തം)',
+        desc: 'Calculated using escape rate, lucky card acquisitions, and lowest bills paid.'
+      },
+      'bill_king': {
+        title: '👑 Bill King / Queen (ബില്ല് രാജാവ്)',
+        desc: 'Ranked strictly by the highest number of bills paid overall.'
+      },
+      'escape_artist': {
+        title: '🏃 Escape Artist (രക്ഷപ്പെടലിൽ പിഎച്ച്ഡി)',
+        desc: 'Ranked by the highest number of successful escapes using the SAFE card.'
+      }
+    };
+
+    let currentCategory = 'biggest_wallet';
+
+    function switchCategory(catKey, btn) {
+      currentCategory = catKey;
+      document.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+
+      const info = CAT_INFO[catKey];
+      document.getElementById('catTitle').textContent = info.title;
+      document.getElementById('catDesc').textContent = info.desc;
+
+      sounds.play('click');
+      loadLeaderboard(catKey);
+    }
+
+    function refreshData() {
+      sounds.play('click');
+      loadLeaderboard(currentCategory);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadLeaderboard('biggest_wallet');
+    });
+  </script>
+</body>
+</html>

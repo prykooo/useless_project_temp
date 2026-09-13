@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Play Game | Who Pays? (ആരാണ് ബില്ല് അടയ്ക്കുന്നത്?)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Noto+Sans+Malayalam:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="/" class="brand">
+      <span class="brand-icon">🎰</span>
+      <span class="gradient-text">WHO PAYS?</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/" class="nav-link"><span>🏠</span> <span class="nav-text">Home</span></a></li>
+      <li><a href="/game" class="nav-link active"><span>🎲</span> <span class="nav-text">Play Game</span></a></li>
+      <li><a href="/leaderboard" class="nav-link"><span>🏆</span> <span class="nav-text">Leaderboard</span></a></li>
+      <li><a href="/profiles" class="nav-link"><span>🥷</span> <span class="nav-text">Profiles</span></a></li>
+    </ul>
+    <div class="nav-controls">
+      <button id="soundToggleBtn" class="icon-btn" onclick="sounds.toggle()" title="Toggle Sound">🔊</button>
+    </div>
+  </nav>
+
+  <!-- GAME CONTAINER -->
+  <main class="container">
+    
+    <!-- STEPPER -->
+    <div class="stepper">
+      <div class="step-item active" id="step1Indicator">
+        <div class="step-circle">1</div>
+        <span>Squad & Bill</span>
+      </div>
+      <div class="step-divider"></div>
+      <div class="step-item" id="step2Indicator">
+        <div class="step-circle">2</div>
+        <span>Mystery Cards</span>
+      </div>
+      <div class="step-divider"></div>
+      <div class="step-item" id="step3Indicator">
+        <div class="step-circle">3</div>
+        <span>The Roulette</span>
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- STEP 1: ADD FRIENDS & ENTER BILL AMOUNT   -->
+    <!-- ========================================== -->
+    <section id="step1Section" class="game-step-section">
+      <div class="glass-panel" style="max-width: 680px; margin: 0 auto;">
+        <div style="text-align: center; margin-bottom: 2rem;">
+          <h2 style="font-size: 2rem; font-weight: 800;">Assemble The Victims</h2>
+          <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.3rem;">
+            Add at least 2 friends and enter the total dining bill amount.
+          </p>
+        </div>
+
+        <!-- Add Player Form -->
+        <div class="form-group">
+          <label class="form-label" for="playerNameInput">Add Player Name</label>
+          <div style="display: flex; gap: 0.75rem;">
+            <div class="input-wrapper" style="flex: 1;">
+              <span class="input-icon">👤</span>
+              <input type="text" id="playerNameInput" class="input-field" placeholder="e.g. Rahul, Sneha, Amal..." maxlength="20" autocomplete="off">
+            </div>
+            <button type="button" id="addPlayerBtn" class="btn btn-primary">
+              <span>+</span> Add
+            </button>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
+            <span class="form-hint">At least 2 players required to start the game.</span>
+            <button type="button" onclick="quickFillFriends()" style="background: none; border: none; color: var(--secondary); font-size: 0.8rem; font-weight: 700; cursor: pointer;">
+              ⚡ Quick Fill Sample Squad
+            </button>
+          </div>
+        </div>
+
+        <!-- Players Chip Container -->
+        <div class="form-group">
+          <label class="form-label">
+            Players at Table (<span id="playerCountLabel">0</span>)
+            <span id="playerRequirementNotice" style="font-size: 0.8rem; color: #f87171; font-weight: normal; margin-left: 0.5rem;">(Need 2+ to start)</span>
+          </label>
+          <div id="playersList" class="players-container">
+            <!-- Chips injected via JS -->
+          </div>
+        </div>
+
+        <!-- Bill Amount Input -->
+        <div class="form-group" style="margin-top: 2rem;">
+          <label class="form-label" for="billAmountInput">Total Bill Amount</label>
+          <div class="input-wrapper">
+            <span class="input-icon">₹</span>
+            <input type="number" id="billAmountInput" class="input-field" placeholder="Enter total bill (e.g. 1200)" min="1" step="1">
+          </div>
+          <div class="form-hint">This amount is used for game calculation only. No actual payment processing.</div>
+        </div>
+
+        <!-- Dynamic Status Alert -->
+        <div id="step1StatusAlert" style="margin: 1.5rem 0 0.5rem; font-size: 0.95rem; font-weight: 700; text-align: center; color: var(--accent-gold); display: none;">
+        </div>
+
+        <!-- Submit Button -->
+        <div style="margin-top: 1.5rem; text-align: center;">
+          <button type="button" id="dealCardsBtn" class="btn btn-primary btn-lg" style="width: 100%;" onclick="dealCards()">
+            <span>🃏</span> Deal Mystery Cards
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- STEP 2: MYSTERY CARDS REVEAL              -->
+    <!-- ========================================== -->
+    <section id="step2Section" class="game-step-section" style="display: none;">
+      <div style="text-align: center; margin-bottom: 2rem;">
+        <div class="badge-tag">🃏 Hidden Superpowers & Curses</div>
+        <h2 style="font-size: 2.4rem; font-weight: 900;">Reveal Your Mystery Card</h2>
+        <p style="color: var(--text-muted); font-size: 1rem; max-width: 600px; margin: 0.5rem auto 0;">
+          Tap your secret card to reveal your fate. Each card directly changes the roulette outcome!
+        </p>
+        <div style="margin-top: 1.25rem;">
+          <button type="button" class="btn btn-secondary" onclick="revealAllCards()">
+            <span>✨</span> Reveal All Cards
+          </button>
+        </div>
+      </div>
+
+      <!-- Cards Grid -->
+      <div id="cardsContainer" class="cards-grid">
+        <!-- Injected via JS -->
+      </div>
+
+      <!-- Proceed Button -->
+      <div style="text-align: center; margin-top: 3rem;">
+        <button type="button" id="proceedToRouletteBtn" class="btn btn-primary btn-lg" disabled onclick="prepareRoulette()">
+          <span>🎡</span> Proceed To The Roulette Wheel
+        </button>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- STEP 3: THE ROULETTE WHEEL                -->
+    <!-- ========================================== -->
+    <section id="step3Section" class="game-step-section" style="display: none;">
+      <div style="text-align: center; margin-bottom: 1.5rem;">
+        <div class="badge-tag" style="background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.3); color: #f87171;">
+          ⚡ The Moment of Truth
+        </div>
+        <h2 style="font-size: 2.4rem; font-weight: 900;">Bill Roulette Wheel</h2>
+        <p style="color: var(--text-muted); font-size: 1rem;">
+          LUCKY card holders have significantly smaller slices, reducing their selection probability!
+        </p>
+      </div>
+
+      <!-- Roulette Display Area -->
+      <div class="wheel-wrapper">
+        <div class="roulette-container">
+          <div class="roulette-pointer">
+            <div class="pointer-gem"></div>
+          </div>
+          <canvas id="rouletteCanvas" width="400" height="400"></canvas>
+          <div class="center-hub">🎯</div>
+        </div>
+
+        <div style="margin-top: 2.5rem; text-align: center;">
+          <button type="button" id="spinRouletteBtn" class="btn btn-primary btn-lg" style="padding: 1.2rem 3rem; font-size: 1.3rem;" onclick="triggerSpin()">
+            <span>🎰</span> SPIN THE WHEEL!
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========================================== -->
+  <!-- MODAL: SAFE CARD TRIGGERED                -->
+  <!-- ========================================== -->
+  <div id="safeModal" class="modal-overlay">
+    <div class="modal-content" style="border-color: var(--accent-safe); box-shadow: 0 0 50px var(--accent-safe-glow);">
+      <div style="font-size: 4rem; margin-bottom: 1rem; filter: drop-shadow(0 0 15px var(--accent-safe-glow));">🛡️</div>
+      <div class="badge-tag" style="background: rgba(16, 185, 129, 0.2); border-color: var(--accent-safe); color: #6ee7b7;">
+        SAFE CARD ACTIVATED!
+      </div>
+      <h2 style="font-size: 2.2rem; font-weight: 900; color: #fff; margin-top: 0.5rem;">
+        <span id="safePlayerName">Player</span> IS SAFE!
+      </h2>
+      <div style="font-size: 1.25rem; font-weight: 700; color: var(--accent-gold); margin: 1rem 0;">
+        “ഇന്ന് നീ രക്ഷപ്പെട്ടു!”
+      </div>
+      <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 2rem;">
+        The shield saved you! You escape paying this round. The wheel will now spin again with the remaining players!
+      </p>
+      <button type="button" class="btn btn-primary btn-lg" style="background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 4px 20px var(--accent-safe-glow);" onclick="handleSafeRespin()">
+        <span>🔄</span> Re-Spin The Wheel
+      </button>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: SWAP CARD TRIGGERED                -->
+  <!-- ========================================== -->
+  <div id="swapModal" class="modal-overlay">
+    <div class="modal-content" style="border-color: var(--secondary); box-shadow: 0 0 50px var(--secondary-glow);">
+      <div style="font-size: 4rem; margin-bottom: 1rem; filter: drop-shadow(0 0 15px var(--secondary-glow));">🔄</div>
+      <div class="badge-tag" style="background: rgba(6, 182, 212, 0.2); border-color: var(--secondary); color: #38bdf8;">
+        SWAP CARD ACTIVATED!
+      </div>
+      <h2 style="font-size: 2rem; font-weight: 900; color: #fff; margin-top: 0.5rem;">
+        <span id="swapChooserName">Player</span>'s Choice!
+      </h2>
+      <div style="font-size: 1.15rem; font-weight: 700; color: var(--accent-gold); margin: 0.75rem 0;">
+        “ഇത് നിനക്ക് വേണ്ട… മറ്റൊരാൾക്ക് കൊടുക്കാം!”
+      </div>
+      <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.25rem;">
+        Choose which friend at the table gets stuck with the bill:
+      </p>
+
+      <!-- Candidate selection list -->
+      <div id="swapCandidatesList" class="swap-candidates">
+        <!-- Injected via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- BANNER: DOUBLE CARD ALERT                 -->
+  <!-- ========================================== -->
+  <div id="doubleAlertBanner" class="modal-overlay">
+    <div class="modal-content shake-animation" style="border-color: var(--accent-danger); box-shadow: 0 0 60px var(--accent-danger-glow); background: linear-gradient(160deg, #3f090e, #110406);">
+      <div style="font-size: 4.5rem; margin-bottom: 0.5rem; filter: drop-shadow(0 0 20px var(--accent-danger-glow));">💀</div>
+      <div class="badge-tag" style="background: rgba(239, 68, 68, 0.25); border-color: #ef4444; color: #fca5a5;">
+        DOUBLE CARD CURSE!
+      </div>
+      <h2 style="font-size: 2.2rem; font-weight: 900; color: #fff; margin-top: 0.5rem;">
+        2X BILL MULTIPLIER!
+      </h2>
+      <div style="font-size: 1.3rem; font-weight: 800; color: var(--accent-gold); margin: 0.75rem 0;">
+        “ഇന്നത്തെ ബിൽ… ഇരട്ടിയായി!”
+      </div>
+      <p style="color: #fca5a5; font-size: 0.95rem;">
+        The curse struck! The total bill amount has been officially DOUBLED!
+      </p>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: FINAL RESULT (THE PAYER IS CHOSEN) -->
+  <!-- ========================================== -->
+  <div id="resultModal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 540px;">
+      <div class="result-avatar">👑</div>
+      <div id="resultCardBadge" class="result-card-effect-tag"></div>
+      
+      <div style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); font-weight: 700;">
+        Today's Official Payer
+      </div>
+      <h2 id="finalPayerName" class="result-payer-name">Rahul</h2>
+
+      <div class="result-amount-badge">
+        <span>To Pay:</span>
+        <span id="finalAmountText">₹1,200</span>
+      </div>
+
+      <!-- Original Malayalam Dialogue Bubble -->
+      <div class="result-dialogue-bubble">
+        <div style="font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">
+          Funny Dialogue / വിധിയുടെ വചനം
+        </div>
+        <span id="finalDialogueText">“ഇനി എന്ത് ചെയ്യാൻ പറ്റും… അടച്ചോ!”</span>
+      </div>
+
+      <!-- Action Buttons -->
+      <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
+        <button type="button" class="btn btn-primary" onclick="playAgain()">
+          <span>🔄</span> Play Again
+        </button>
+        <a href="/leaderboard" class="btn btn-secondary">
+          <span>🏆</span> Leaderboard
+        </a>
+        <a href="/profiles" class="btn btn-secondary">
+          <span>🥷</span> Profiles
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONFETTI CANVAS -->
+  <canvas id="confettiCanvas"></canvas>
+
+  <script src="/script.js"></script>
+  <script src="../script.js"></script>
+  <script>
+    // Keep player count badge in sync
+    const originalRenderChips = renderPlayerChips;
+    renderPlayerChips = function() {
+      originalRenderChips();
+      const countElem = document.getElementById('playerCountLabel');
+      if (countElem) countElem.textContent = GameState.players.length;
+    };
+  </script>
+</body>
+</html>

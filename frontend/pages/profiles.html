@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Character Profiles | Who Pays? (ആരാണ് ബില്ല് അടയ്ക്കുന്നത്?)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Noto+Sans+Malayalam:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="/" class="brand">
+      <span class="brand-icon">🎰</span>
+      <span class="gradient-text">WHO PAYS?</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/" class="nav-link"><span>🏠</span> <span class="nav-text">Home</span></a></li>
+      <li><a href="/game" class="nav-link"><span>🎲</span> <span class="nav-text">Play Game</span></a></li>
+      <li><a href="/leaderboard" class="nav-link"><span>🏆</span> <span class="nav-text">Leaderboard</span></a></li>
+      <li><a href="/profiles" class="nav-link active"><span>🥷</span> <span class="nav-text">Profiles</span></a></li>
+    </ul>
+    <div class="nav-controls">
+      <button id="soundToggleBtn" class="icon-btn" onclick="sounds.toggle()" title="Toggle Sound">🔊</button>
+      <a href="/game" class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Play Now</a>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTAINER -->
+  <main class="container">
+    <div class="hero" style="margin-bottom: 2.5rem;">
+      <div class="badge-tag" style="background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.3); color: #34d399;">
+        <span>🥷</span> Dynamic Character Identity Engine
+      </div>
+      <h1 class="hero-title">Player Character Profiles</h1>
+      <p class="hero-malayalam">“നിങ്ങളുടെ കളികൾ പറയും… നിങ്ങൾ ആരാണെന്ന്!”</p>
+      <p class="hero-subtitle">
+        Every player is automatically analyzed by their actual gameplay history to award dynamic identities and humorous Malayalam titles.
+      </p>
+    </div>
+
+    <!-- PROFILES GRID -->
+    <div id="profilesGrid" class="profiles-grid">
+      <!-- Injected via JS -->
+    </div>
+  </main>
+
+  <script src="/script.js"></script>
+  <script src="../script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      loadProfiles();
+    });
+  </script>
+</body>
+</html>

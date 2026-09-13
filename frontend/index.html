@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Who Pays? | ആരാണ് ബില്ല് അടയ്ക്കുന്നത്?</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Noto+Sans+Malayalam:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <!-- Fallback relative stylesheet if opened without web server -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="/" class="brand">
+      <span class="brand-icon">🎰</span>
+      <span class="gradient-text">WHO PAYS?</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/" class="nav-link active"><span>🏠</span> <span class="nav-text">Home</span></a></li>
+      <li><a href="/game" class="nav-link"><span>🎲</span> <span class="nav-text">Play Game</span></a></li>
+      <li><a href="/leaderboard" class="nav-link"><span>🏆</span> <span class="nav-text">Leaderboard</span></a></li>
+      <li><a href="/profiles" class="nav-link"><span>🥷</span> <span class="nav-text">Profiles</span></a></li>
+    </ul>
+    <div class="nav-controls">
+      <button id="soundToggleBtn" class="icon-btn" onclick="sounds.toggle()" title="Toggle Sound">🔊</button>
+      <a href="/game" class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Play Now</a>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="container">
+    <!-- HERO -->
+    <section class="hero" style="padding: 3rem 0 2rem;">
+      <div class="badge-tag">
+        <span>✨</span> The Ultimate Dining Roulette Mini-Game
+      </div>
+      <h1 class="hero-title">
+        Stop Arguing. <br>
+        <span style="background: linear-gradient(135deg, #ec4899, #8b5cf6, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Let Fate Decide Who Pays!</span>
+      </h1>
+      <p class="hero-malayalam">“ഇനി എന്ത് ചെയ്യാൻ പറ്റും… വിധി തീരുമാനിക്കും!”</p>
+      <p class="hero-subtitle">
+        Turn every awkward bill moment into high-stakes group entertainment with mystery cards, a weighted roulette wheel, dramatic card effects, and Malayalam humor.
+      </p>
+
+      <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem; flex-wrap: wrap;">
+        <a href="/game" class="btn btn-primary btn-lg">
+          <span>🎲</span> Start The Game
+        </a>
+        <a href="/leaderboard" class="btn btn-secondary btn-lg">
+          <span>🏆</span> Hall of Fame
+        </a>
+        <a href="/profiles" class="btn btn-secondary btn-lg">
+          <span>🥷</span> Character Profiles
+        </a>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS STEPPING -->
+    <section style="margin: 4rem 0;">
+      <div style="text-align: center; margin-bottom: 2.5rem;">
+        <div class="badge-tag" style="background: rgba(6, 182, 212, 0.15); border-color: rgba(6, 182, 212, 0.3); color: #38bdf8;">
+          ⚡ Simple & Addictive Flow
+        </div>
+        <h2 style="font-size: 2.2rem; font-weight: 800;">How "Who Pays" Works</h2>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem;">
+        <div class="glass-panel" style="text-align: center;">
+          <div style="font-size: 2.5rem; margin-bottom: 1rem;">👥</div>
+          <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem;">1. Add Your Squad</h3>
+          <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;">
+            Add all your friends at the table and enter the total bill amount. No real money needed!
+          </p>
+        </div>
+
+        <div class="glass-panel" style="text-align: center;">
+          <div style="font-size: 2.5rem; margin-bottom: 1rem;">🃏</div>
+          <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem;">2. Mystery Cards</h3>
+          <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;">
+            Everyone is dealt a secret mystery card. Flip to discover your superpower or impending doom.
+          </p>
+        </div>
+
+        <div class="glass-panel" style="text-align: center;">
+          <div style="font-size: 2.5rem; margin-bottom: 1rem;">🎡</div>
+          <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem;">3. Roulette Spin</h3>
+          <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;">
+            Spin the wheel! Watch out: LUCKY card holders get smaller wheel slices, tipping odds in their favor.
+          </p>
+        </div>
+
+        <div class="glass-panel" style="text-align: center;">
+          <div style="font-size: 2.5rem; margin-bottom: 1rem;">💥</div>
+          <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem;">4. Card Effects</h3>
+          <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;">
+            Trigger SAFE re-spins, SWAP the bill to another friend, or pay DOUBLE! Winner gets crowned on the leaderboard.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE 4 MYSTERY CARDS SHOWCASE -->
+    <section style="margin: 4rem 0;">
+      <div style="text-align: center; margin-bottom: 2rem;">
+        <div class="badge-tag" style="background: rgba(251, 191, 36, 0.15); border-color: rgba(251, 191, 36, 0.3); color: var(--accent-gold);">
+          🃏 The 4 Mystery Cards
+        </div>
+        <h2 style="font-size: 2.2rem; font-weight: 800;">Every Card Changes The Game</h2>
+        <p style="color: var(--text-muted); max-width: 600px; margin: 0.5rem auto 0;">
+          These aren't just cosmetic badges. Every card has a concrete mechanical impact on the final outcome!
+        </p>
+      </div>
+
+      <div class="cards-grid">
+        <!-- SAFE -->
+        <div class="mystery-card-wrapper">
+          <div class="mystery-card flipped">
+            <div class="card-face card-face-back card-safe">
+              <div>
+                <div class="card-icon-lg">🛡️</div>
+                <div class="card-title-lg">SAFE</div>
+                <div style="font-size: 0.8rem; color: var(--accent-safe); font-weight: 700; text-transform: uppercase; margin-top: 0.2rem;">Escape Shield</div>
+              </div>
+              <div>
+                <div class="card-malayalam-text">“ഇന്ന് നീ രക്ഷപ്പെട്ടു!”</div>
+                <div class="card-desc">If selected, you dodge paying completely and the roulette wheel spins again!</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LUCKY -->
+        <div class="mystery-card-wrapper">
+          <div class="mystery-card flipped">
+            <div class="card-face card-face-back card-lucky">
+              <div>
+                <div class="card-icon-lg">🍀</div>
+                <div class="card-title-lg">LUCKY</div>
+                <div style="font-size: 0.8rem; color: #34d399; font-weight: 700; text-transform: uppercase; margin-top: 0.2rem;">Weighted Odds</div>
+              </div>
+              <div>
+                <div class="card-malayalam-text">“ഭാഗ്യം ഇന്നും കൂടെയുണ്ട്!”</div>
+                <div class="card-desc">Shrinks your slice on the roulette wheel by 65%, giving you a much higher chance to avoid being picked.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SWAP -->
+        <div class="mystery-card-wrapper">
+          <div class="mystery-card flipped">
+            <div class="card-face card-face-back card-swap">
+              <div>
+                <div class="card-icon-lg">🔄</div>
+                <div class="card-title-lg">SWAP</div>
+                <div style="font-size: 0.8rem; color: #38bdf8; font-weight: 700; text-transform: uppercase; margin-top: 0.2rem;">Uno Reverse</div>
+              </div>
+              <div>
+                <div class="card-malayalam-text">“ഇത് നിനക്ക് വേണ്ട… മറ്റൊരാൾക്ക് കൊടുക്കാം!”</div>
+                <div class="card-desc">If the wheel lands on you, pass the bill directly to any friend of your choice!</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DOUBLE -->
+        <div class="mystery-card-wrapper">
+          <div class="mystery-card flipped">
+            <div class="card-face card-face-back card-double">
+              <div>
+                <div class="card-icon-lg">💀</div>
+                <div class="card-title-lg">DOUBLE</div>
+                <div style="font-size: 0.8rem; color: #f87171; font-weight: 700; text-transform: uppercase; margin-top: 0.2rem;">Financial Doom</div>
+              </div>
+              <div>
+                <div class="card-malayalam-text">“ഇന്നത്തെ ബിൽ… ഇരട്ടിയായി!”</div>
+                <div class="card-desc">If the wheel stops on you, your required payment is instantly doubled (2x multiplier)!</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CALL TO ACTION -->
+    <section class="glass-panel" style="text-align: center; padding: 3.5rem 2rem; margin: 4rem 0; background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(6, 182, 212, 0.15)); border-color: rgba(168, 85, 247, 0.4);">
+      <h2 style="font-size: 2.4rem; font-weight: 900; margin-bottom: 0.75rem;">Ready To Risk It All?</h2>
+      <p style="color: var(--text-muted); font-size: 1.1rem; max-width: 550px; margin: 0 auto 1.75rem;">
+        Gather your friends, enter today's bill, and let the wheel spin!
+      </p>
+      <a href="/game" class="btn btn-primary btn-lg" style="font-size: 1.25rem; padding: 1.2rem 2.8rem;">
+        <span>🔥</span> Launch Who Pays
+      </a>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer style="text-align: center; padding: 2rem 1rem; border-top: 1px solid var(--border-color); color: var(--text-dim); font-size: 0.85rem;">
+    <p>Made with ❤️ for friends who never want to pay the bill.</p>
+    <p style="margin-top: 0.4rem;">Powered by Python Flask & SQLite | No actual payment information collected.</p>
+  </footer>
+
+  <script src="/script.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
