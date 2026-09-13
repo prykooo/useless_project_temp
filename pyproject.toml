@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "who-pays"
+version = "0.1.0"
+description = "Who Pays? bill roulette app"
+requires-python = ">=3.11"
+
+[tool.vercel]
+entrypoint = "backend.app:app"
